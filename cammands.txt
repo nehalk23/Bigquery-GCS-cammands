@@ -1,0 +1,49 @@
+bq cammands 
+
+			bq version
+
+			bq mk --table n2_dataset.prac_table "id:INTEGER, name:STRING, age:INTEGER, city:STRING"
+
+
+			bq ls n2_dataset
+
+
+			bq query --use_legacy_sql=false `
+			'INSERT INTO `n2_dataset.prac_table` (id, name, age, city) 
+ 			VALUES (1, ''Money'', 100, ''Mumbai''), 
+        			(2, ''Rony'', 10, ''Mumbai'')'
+
+			bq query --use_legacy_sql=false `
+				'SELECT * FROM `n2_dataset.prac_table`'
+
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+GCS cammands 
+			gcloud components update
+			gcloud --version
+			gcloud auth login 
+			gcloud storage ls gs://n-prac-bucket/
+
+List Buckets		- gcloud storage buckets list
+List Files in a Bucket	- gcloud storage ls gs://my-bucket/
+Create a Bucket		- gcloud storage buckets create gs://n2-prac-bucket --location=us-central1 
+
+Upload a File		- gcloud storage cp myfile.txt gs://my-bucket/
+Download a File		- gcloud storage cp gs://my-bucket/myfile.txt .
+Delete a File		- gcloud storage rm gs://my-bucket/myfile.txt
+Delete a Bucket		- gcloud storage buckets delete my-bucket
+to move 		- gcloud storage mv gs://my-bucket/myfile.txt gs://my-bucket/newfile.txt
+Displays the contents   - gcloud storage cat gs://my-bucket/myfile.txt
+without 
+downloading it.
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+sql 
+
+
+
+CREATE TABLE `destination_project.destination_dataset.new_table` AS
+SELECT * FROM `source_project.source_dataset.source_table`;
+
