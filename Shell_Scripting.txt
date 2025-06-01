@@ -1,0 +1,40 @@
+What is Shell Scripting?
+A shell script is a file containing a series of Linux/Unix commands that are executed by the shell (usually bash, but could also be sh, zsh, etc.).
+
+Use Cases:
+Automating repetitive tasks (e.g., backups, deployments)
+
+Running batch jobs
+
+Monitoring systems
+
+Installing software
+
+Writing DevOps/CI-CD tasks
+
+
+
+Creating a shell script: echo "Hello, Nehal!"
+
+
+Make it executable:  chmod +x script.sh
+
+Run it: ./script.sh
+
+Basic Shell Commands :
+
+| Command        | Purpose                  |
+| -------------- | ------------------------ |
+| `ls`           | List files               |
+| `cd`           | Change directory         |
+| `pwd`          | Print current directory  |
+| `echo`         | Print text to terminal   |
+| `cat`          | View file contents       |
+| `touch`        | Create a new file        |
+| `mkdir`        | Create a directory       |
+| `rm`           | Delete files             |
+| `cp`           | Copy files               |
+| `mv`           | Move/rename files        |
+| `ifconfig`     | Show network interfaces  |
+| `top` / `htop` | Monitor system processes |
+

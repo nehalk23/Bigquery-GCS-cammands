@@ -1,0 +1,41 @@
+1) ImportError for GoogleCloudStorageToGoogleCloudStorageOperator in Airflow DAG
+
+ Broken DAG: [/home/airflow/gcs/dags/move_gcs_files.py]
+Traceback (most recent call last):
+  File "<frozen importlib._bootstrap>", line 241, in _call_with_frames_removed
+  File "/home/airflow/gcs/dags/move_gcs_files.py", line 2, in <module>
+    from airflow.providers.google.cloud.transfers.gcs_to_gcs import GoogleCloudStorageToGoogleCloudStorageOperator
+ImportError: cannot import name 'GoogleCloudStorageToGoogleCloudStorageOperator' from 'airflow.providers.google.cloud.transfers.gcs_to_gcs' (/opt/python3.11/lib/python3.11/site-packages/airflow/providers/google/cloud/transfer
+
+
+solution : 
+
+replace 
+
+from airflow.providers.google.cloud.transfers.gcs_to_gcs import GoogleCloudStorageToGoogleCloudStorageOperator
+
+to
+
+from airflow.providers.google.cloud.transfers.gcs_to_gcs import GCSToGCSOperator
+-----------------------------------------------------------------------------------------------------------------------------------------------
+2) Cloud Composer Permission Error (403 Forbidden) for GCS Buckets
+
+[2025-03-06, 09:13:45 UTC] {taskinstance.py:3312} ERROR - Task failed with exception\nTraceback (most recent call last):\n  File "/opt/python3.11/lib/python3.11/site-packages/airflow/models/taskinstance.py", line 768, in _execute_task\n    result = _execute_callable(context=context, **execute_callable_kwargs)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File "/opt/python3.11/lib/python3.11/site-packages/airflow/models/taskinstance.py", line 734, in _execute_callable\n    return ExecutionCallableRunner(\n           ^^^^^^^^^^^^^^^^^^^^^^^^\n  File "/opt/python3.11/lib/python3.11/site-packages/airflow/utils/operator_helpers.py", line 252, in run\n    return self.func(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File "/opt/python3.11/lib/python3.11/site-packages/airflow/models/baseoperator.py", line 415, in wrapper\n    return func(self, *args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File "/opt/python3.11/lib/python3.11/site-packages/airflow/providers/google/cloud/transfers/gcs_to_gcs.py", line 278, in execute\n    self._copy_source_with_wildcard(hook=hook, prefix=prefix)\n  File "/opt/python3.11/lib/python3.11/site-packages/airflow/providers/google/cloud/transfers/gcs_to_gcs.py", line 467, in _copy_source_with_wildcard\n    objects = hook.list(self.source_bucket, prefix=prefix_, delimiter=delimiter)\n              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File "/opt/python3.11/lib/python3.11/site-packages/airflow/providers/google/cloud/hooks/gcs.py", line 805, in list\n    self._list(\n  File "/opt/python3.11/lib/python3.11/site-packages/airflow/providers/google/cloud/hooks/gcs.py", line 867, in _list\n    blob_names = [blob.name for blob in blobs]\n                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File "/opt/python3.11/lib/python3.11/site-packages/airflow/providers/google/cloud/hooks/gcs.py", line 867, in <listcomp>\n    blob_names = [blob.name for blob in blobs]\n                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File "/opt/python3.11/lib/python3.11/site-packages/google/api_core/page_iterator.py", line 208, in _items_iter\n    for page in self._page_iter(increment=False):\n  File "/opt/python3.11/lib/python3.11/site-packages/google/api_core/page_iterator.py", line 244, in _page_iter\n    page = self._next_page()\n           ^^^^^^^^^^^^^^^^^\n  File "/opt/python3.11/lib/python3.11/site-packages/google/api_core/page_iterator.py", line 373, in _next_page\n    response = self._get_next_page_response()\n               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File "/opt/python3.11/lib/python3.11/site-packages/google/api_core/page_iterator.py", line 432, in _get_next_page_response\n    return self.api_request(\n           ^^^^^^^^^^^^^^^^^\n  File "/opt/python3.11/lib/python3.11/site-packages/google/cloud/storage/_http.py", line 90, in api_request\n    return call()\n           ^^^^^^\n  File "/opt/python3.11/lib/python3.11/site-packages/google/api_core/retry/retry_unary.py", line 293, in retry_wrapped_func\n    return retry_target(\n           ^^^^^^^^^^^^^\n  File "/opt/python3.11/lib/python3.11/site-packages/google/api_core/retry/retry_unary.py", line 153, in retry_target\n    _retry_error_helper(\n  File "/opt/python3.11/lib/python3.11/site-packages/google/api_core/retry/retry_base.py", line 212, in _retry_error_helper\n    raise final_exc from source_exc\n  File "/opt/python3.11/lib/python3.11/site-packages/google/api_core/retry/retry_unary.py", line 144, in retry_target\n    result = target()\n             ^^^^^^^^\n  File "/opt/python3.11/lib/python3.11/site-packages/google/cloud/_http/__init__.py", line 494, in api_request\n    raise exceptions.from_http_response(response)\ngoogle.api_core.exceptions.Forbidden: 403 GET https://storage.googleapis.com/storage/v1/b/n-prac-bucket/o?projection=noAcl&prefix=&delimiter=&prettyPrint=false: 9076115425-compute@developer.gserviceaccount.com does not have storage.objects.list access to the Google Cloud Storage bucket. Permission 'storage.objects.list' denied on resource (or it may not exist).
+
+solution :
+
+Change the  persmission editor  and Fine-Grained Reader
+------------------------------------------------------------------------------------------------------------------------------------------
+3) Invalid arguments were passed to BigQueryToGCSOperator in Airflow DAG
+
+Broken DAG: [/home/airflow/gcs/dags/export_bigquery_table_to_gcs.py]
+Traceback (most recent call last):
+  File "/opt/python3.11/lib/python3.11/site-packages/airflow/models/baseoperator.py", line 499, in apply_defaults
+    result = func(self, **kwargs, default_args=default_args)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/python3.11/lib/python3.11/site-packages/airflow/models/baseoperator.py", line 947, in __init__
+    raise AirflowException(
+airflow.exceptions.AirflowException: Invalid arguments were passed to BigQueryToGCSOperator (task_id: export_bq_to_gcs_task). Invalid arguments were:
+**kwargs: {'bucket_name': 'sid_bucket_01'}
+
+solution :
